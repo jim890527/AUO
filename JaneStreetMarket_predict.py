@@ -182,3 +182,5 @@ for (test_df, sample_prediction_df) in iter_test:
     y_preds = model.predict(X_test)
     sample_prediction_df.action = y_preds
     env.predict(sample_prediction_df)
+   
+#https://github.com/jim890527/B10756017.github.io/blob/master/ML_Final.ipynb
