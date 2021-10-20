@@ -580,7 +580,7 @@ class Avl_tree{		// AVL_Tree must is ' 1 >= L-R >= -1 '
 		    int b_factor = l_height - r_height;		// L-R
 			return b_factor;
 		}
-		Avl_tree* ll_rotat(Avl_tree *parent){	// Rotate right 
+		Avl_tree* ll_rotat(Avl_tree *parent){	// Rotate to right 
 			Avl_tree *t;
 			t = parent->l;		// t = parent's left 'subtree'
 			parent->l = t->r;	// t->r give to parent
@@ -588,7 +588,7 @@ class Avl_tree{		// AVL_Tree must is ' 1 >= L-R >= -1 '
 			cout<<"Left-Left Rotation";
 			return t;
 		}
-		Avl_tree* rr_rotat(Avl_tree *parent){	// Rotate left 
+		Avl_tree* rr_rotat(Avl_tree *parent){	// Rotate to left 
 			Avl_tree *t;
 			t = parent->r;		// t = parent's right 'subtree'
 			parent->r = t->l;	// t->l give to parent
