@@ -7,7 +7,6 @@ Created on Wed Mar 24 17:42:05 2021
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from math import pi
 import mysql.connector as mysql
 
 def connDB():
@@ -153,77 +152,8 @@ def game():
     radar('Player29', df_sql, '29')
     #db.close()
 
-def mi_pic(result):
-    #draw 
-    labels = ['1號燈來回時間','2號燈來回時間','3號燈來回時間','4號燈來回時間','5號燈來回時間','6號燈來回時間']
-    kinds = list(result.iloc[:, 0])
-    result = pd.concat([result, result[['1號燈來回時間']]], axis=1)
-    centers = np.array(result.iloc[:, 1:])
-    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
-    angles = np.concatenate((angles, [angles[0]]))
-    #plot and line
-    for i in range(len(kinds)):
-        fig = plt.figure()
-        ax = fig.add_subplot(111, polar=True) 
-        ax.plot(angles, centers[i], linewidth=1, label=kinds[i])
-        cg=['NO1',	'NO2',	'NO3',	'NO4'	,'NO5' ,'NO6']
-        N=len(cg)
-        angles=[n/float(N)*2*pi for n in range(N)]
-        angles+=angles[:1]
-        plt.title('Player round trip')
-        plt.fill(angles,centers[i],facecolor='b',alpha=0.25)
-        plt.legend()
-        plt.xticks(angles[:-1],cg)
-        plt.yticks([1,1.5,2.3,2.5,2.7,3.2],color="gray",size=8)
-        plt.ylim(1, 3.2)
-        plt.show()
-        
-def mi():
-    df = pd.read_excel("mi.xlsx")
-    print(df)
-    conn = creat(df,'mi')
-    print('\r\n')
-    df_sql = pd.read_sql('SELECT 編號, 1號燈來回時間, 2號燈來回時間, 3號燈來回時間, 4號燈來回時間, 5號燈來回時間, 6號燈來回時間 FROM mi', con=conn)
-    print(df_sql)
-    mi_pic(df_sql)
-
-def T_pic(result):
-    labels = ['起點到1號',	'1號到2號',	'2號到3號',	'3號到1號'	,'1號到起點']
-    kinds = list(result.iloc[:, 0])
-    result = pd.concat([result, result[['起點到1號']]], axis=1)
-    centers = np.array(result.iloc[:, 1:])
-    angles = np.linspace(0, 2 * np.pi, len(labels), endpoint=False)
-    angles = np.concatenate((angles, [angles[0]]))
-    #plot and line
-    for i in range(len(kinds)):
-        fig = plt.figure()
-        ax = fig.add_subplot(111, polar=True) 
-        ax.plot(angles, centers[i], linewidth=1, label=kinds[i])
-        cg=['F-P1','P1-P2','P2-P3','P3-P1','P1-F']
-        N=len(cg)
-        angles=[n/float(N)*2*pi for n in range(N)]
-        angles+=angles[:1]
-        plt.title('Player Ability Plot')
-        plt.fill(angles,centers[i],facecolor='b',alpha=0.25)
-        plt.legend()
-        plt.xticks(angles[:-1],cg)
-        plt.yticks([0,1,2,3,4,5],color="gray",size=8)
-        plt.ylim(0, 5)
-        plt.show()
-    
-def T():
-    df = pd.read_excel("T.xls")
-    print(df)
-    conn = creat(df,'t')
-    print('\r\n')
-    df_sql = pd.read_sql('SELECT 編號,起點到1號,1號到2號,2號到3號 ,3號到1號,1號到起點 FROM t', con=conn)
-    print(df_sql)
-    T_pic(df_sql)
-    
 def main():
     game()
-    #mi()
-    #T()
     
 if __name__ == "__main__":
     main()
