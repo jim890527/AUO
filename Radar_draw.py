@@ -82,7 +82,6 @@ def add_radar(target, color, ax, angles, df_r):
     ax.fill(angles, values, color=color, alpha=0.25)
 
 def radar(table, df_r, numberr ):   #table = title name
-    import matplotlib.pyplot as plt 
     condition = df_r['number'] == numberr   #number = numberr
     df_r = df_r.loc[condition]
     df_gr = df_r.groupby(['number','target']).mean() 
