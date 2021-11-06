@@ -31,6 +31,22 @@ def creat(data,name):
     data.to_sql(name=name, con=connection, if_exists='replace')  # append, fail
     return connection
 
+def check(p_id, mode):      # check database is non have this tuple
+    connection = sqlalchemy.create_engine("mysql+pymysql://root:@localhost:8888/badminton",encoding="utf-8", echo=False)
+    df_sql = pd.read_sql('SELECT * FROM player_radar', con=connection)
+    p_id = int(p_id)
+    mode = str(mode)
+    p = df_sql[df_sql['p_id']==p_id]    # == p_id's target
+    #print(p.count()['radar'])
+    if p.count()['radar'] == 0:         # DB non have this ID
+        return False
+    df_sql = p
+    m = df_sql[df_sql['mode']==mode]    # == p_id && mode's target
+    if m.count()['radar'] == 0:         # have this ID but mode different 
+        return False
+    else:                               # database have this tuple
+        return True
+
 def convertToBinaryData(filename):      # translate image format to binary
     # Convert digital data to binary format
     with open(filename, 'rb') as file:
@@ -38,6 +54,7 @@ def convertToBinaryData(filename):      # translate image format to binary
     return binaryData
 
 def insertBLOB(p_id, mode, photo):    # image to DB
+    if check(p_id, mode) : return     # Determine if it already exists
     print("Inserting BLOB into player_radar table")
     try:
         connection = mysql.connect(host='localhost', user='root', password='', port = 8888, db='badminton')
