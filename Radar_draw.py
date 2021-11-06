@@ -143,7 +143,7 @@ def radar(table, df_r, numberr ):   #table = title name
         ax.set_facecolor('#FAFAFA')
         ax.set_title(str(table), y=1.08)
         ax.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1))
-        plt.savefig(fname=str(table)+'.png', bbox_inches='tight', dpi=150)
+        plt.savefig(fname=r'game/'+str(table)+'.png', bbox_inches='tight', dpi=150)
         insertBLOB(numberr, "game", str(table)+'.png')  # img to database
 
 def game():
